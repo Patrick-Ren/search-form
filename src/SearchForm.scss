@@ -1,0 +1,40 @@
+.search-form {
+    width: 95%;
+    margin: 10px auto;
+    padding: 0 30px 10px 30px;
+    border: 1px solid silver;
+    box-shadow: 0 0 5px silver;
+    //background-color: linear-gradient(90deg, royalblue 0%, blueviolet 50%, blue 100%);
+    color: white;
+
+    background: linear-gradient(180deg, rgb(107, 102, 204) 0%, rgb(14, 140, 179) 35%, rgba(0,212,255,1) 100%);
+
+    .label {
+        font-size: 18px;
+        line-height: 40px;
+    }
+
+    .first-row {
+        max-width: 100%;
+    }
+
+    .second-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+
+        .vender, .gsm {
+            width: 30%;
+        }
+
+        .btn-container {
+            width: 30%;
+            button {
+                width: 100px;
+            }
+            button:nth-child(1) {
+                margin-right: 30px;
+            }
+        }
+    }
+}

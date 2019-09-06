@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import SearchField from './SearchField'
+import SearchForm from './SearchForm'
+
 
 
 // const App = () => <div>
 //     Hello
 // </div>
 
-ReactDOM.render(<SearchField />, document.getElementById('root'));
+ReactDOM.render(<SearchForm />, document.getElementById('root'));
