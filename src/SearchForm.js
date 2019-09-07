@@ -5,39 +5,16 @@ import './SearchForm.scss'
 
 class SearchForm extends Component {
 
-    constructor(props) {
-        super(props)
-        console.log(this.props)
-    }
-
-    componentDidMount() {
-        //console.log(this.props)
-    }
-
-    // static defaultProps = {
-    //     materialNumber: [],
-    //     vender: "",
-    //     gsm: "",
-    //     onMaterialNumberChange: () => {},
-    //     onVenderChange: () => {},
-    //     onGsmChange: () => {},
-    //     onSearch: () => {},
-    //     onReset: () => {}
-    // }
-
     handleMaterialNumberChange = arr => {
-        //console.log(this.props)
-        //console.log(this.props)
-        console.log(this.props)
         this.props.onMaterialNumberChange(arr)
     }
 
-    handleVenderChange = val => {
-        this.props.onVenderChange(val)
+    handleVenderChange = e => {
+        this.props.onVenderChange(e.target.value)
     }
 
-    handleGsmChange = val => {
-        this.props.onGsmChange(val)
+    handleGsmChange = e => {
+        this.props.onGsmChange(e.target.value)
     }
 
     handleSearch = () => {
@@ -48,12 +25,8 @@ class SearchForm extends Component {
         this.props.onReset()
     }
 
-    handleSelectClick = val => {
-        console.log(val)
-    }
-
     render() {
-        const { materialNumber, vender, gsm } = this.props;  
+        const { materialNumber, vender, gsm, loading } = this.props;  
         // console.log(this.props)
         return <form className="search-form">
             <div className="first-row">
@@ -65,7 +38,6 @@ class SearchForm extends Component {
                     tokenSeparators={[';', '；', ',', '，', ' ', '\t']}
                     value={materialNumber}
                     onChange={this.handleMaterialNumberChange}
-                    onClick={this.handleSelectClick}
                 />
             </div>
 
@@ -81,7 +53,7 @@ class SearchForm extends Component {
                 </div>
 
                 <div className="btn-container">
-                    <Button type="primary" htmlType="submit">Search</Button>
+                    <Button icon="search" loading={loading} onClick={this.handleSearch}>Search</Button>
                     <Button onClick={this.handleReset}>Clear</Button>
                 </div>
             </div>

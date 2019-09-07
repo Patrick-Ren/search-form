@@ -1,11 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import SearchForm from './SearchForm'
+import App from './App';
 
 
-
-// const App = () => <div>
-//     Hello
-// </div>
-
-ReactDOM.render(<SearchForm />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
