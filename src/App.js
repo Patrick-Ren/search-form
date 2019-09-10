@@ -8,12 +8,12 @@ const fakeData = [];
 for (let i = 0; i < 50; i++) {
     var item = {
         key: (i + 1).toString(),
-        materialNumber: "MN" + (i + 1).toString().padStart(3, '0'),
+        materialNumber: "MN" + (i + 1).toString().padStart(8, '0'),
         vender: "renzhu1",
         gsm: "whatever"
     }
-    for (let x = 0; x < 30; x++) {
-        item["other" + (x+1)] = "this is just some fake data"
+    for (let x = 0; x < 20; x++) {
+        item["other" + (x+1)] = "展示数据"
     }
     fakeData.push(item)
 }
