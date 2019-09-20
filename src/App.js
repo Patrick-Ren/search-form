@@ -78,7 +78,7 @@ class App extends Component {
     }
 
     handleUpload = () => {
-        //make api call
+        //show uploader, make api call
         this.setState({
             uploadErrors: [
                 {
@@ -119,7 +119,13 @@ class App extends Component {
                 onReset={this.reset}
             />
             <DataTable dataSource={dataSource} loading={searching} onUpload={this.handleUpload} />
-            <ErrorBox errors={uploadErrors} onClose={this.clearUploadErrors} />
+            {
+                uploadErrors.length > 0 
+                ?
+                <ErrorBox errors={uploadErrors} onClose={this.clearUploadErrors} />
+                :
+                null
+            }
         </div>
     }
 }

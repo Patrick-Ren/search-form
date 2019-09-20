@@ -47,9 +47,11 @@ class DataTable extends Component {
         this.props.onUpload()
     }
 
+    
     exportAsExcel = () => {
-
-        //dataSource to excel
+        /*
+            这个函数里的代码来自: https://redstapler.co/sheetjs-tutorial-create-xlsx 
+        */
         var wb = XLSX.utils.book_new();
         wb.Props = {
             Title: "Search Result, Lenovo",
@@ -60,7 +62,7 @@ class DataTable extends Component {
         
         wb.SheetNames.push("Result Sheet");
 
-        //convert dataSource to array
+        /*截取dataSource里的数据为二维数组，以作为worksheet里面的数据*/
         let ws_data = [];
         //add in header
         let header = [];
@@ -74,7 +76,8 @@ class DataTable extends Component {
             for (let prop in item) {
                 if (prop === "key")
                     continue;
-                arr.push(item[prop])
+                else
+                    arr.push(item[prop])
             }
             ws_data.push(arr)
         })
@@ -85,7 +88,8 @@ class DataTable extends Component {
         function s2ab(s) {
             var buf = new ArrayBuffer(s.length);
             var view = new Uint8Array(buf);
-            for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+            for (var i=0; i<s.length; i++) 
+                view[i] = s.charCodeAt(i) & 0xFF;
             return buf;
         }
         saveAs(
