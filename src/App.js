@@ -1,133 +1,79 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import SearchForm from './SearchForm';
 import DataTable from './DataTable';
 import ErrorBox from './ErrorBox';
-import './App.scss'
+import FakeData from './FakeData';
+import './App.scss';
 
-const fakeData = [];
-for (let i = 0; i < 50; i++) {
-    var item = {
-        key: (i + 1).toString(),
-        materialNumber: "MN" + (i + 1).toString().padStart(8, '0'),
-        vender: "renzhu1",
-        gsm: "whatever"
-    }
-    for (let x = 0; x < 20; x++) {
-        item["other" + (x+1)] = "展示数据"
-    }
-    fakeData.push(item)
-}
+const MethodContext = React.createContext(null)
 
-class App extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            materialNumber: [],
-            vender: "",
-            gsm: "",
-            searching: false,
-            dataSource: [], 
-            uploadErrors: []
+function App()  {
+    const [searchData, setSearchData] = useState({
+        materialNumber: [],
+        vender: "",
+        gsm: ""
+    });
+
+    const [searching, setSearching] = useState(false);
+    const [tableData, setTableData] = useState([]);
+    const [uploadErrors, setUploadErrors] = useState([]);
+    const [showErrorBox, setShowErrorBox] = useState(false)
+
+    useEffect(() => {
+        if (searching) {
+            setTimeout(() => {
+                setTableData(FakeData.table)
+            }, 1000)
         }
-    }
-    handleMaterialNumberChange = arr => {
-        this.setState({
-            materialNumber: arr
+    }, [searching])
+
+    useEffect(() => {
+        setSearching(false)
+    }, [tableData])
+
+    function handleSearchDataChange(dataType, newValue) {
+        setSearchData(prev => {
+            return { ...prev, [dataType]: newValue }
         })
     }
 
-    handleVenderChange = val => {
-        this.setState({
-            vender: val
-        })
+    function handleSearch() {
+        setSearching(true)
     }
 
-    handleGsmChange = val => {
-        this.setState({
-            gsm: val
-        })
-    }
-
-    fetchData = () => {
-        setTimeout(() => {
-            this.setState({
-                searching: false,
-                dataSource: fakeData
-            })
-        }, 1000)
-    }
-
-    search = () => {
-        this.setState({
-            searching: true
-        }, this.fetchData) 
-    }
-
-    reset = () => {
-        this.setState({
+    function handleSearchClear() {
+        setSearchData({
             materialNumber: [],
             vender: "",
             gsm: ""
         })
     }
 
-    clearUploadErrors = () => {
-        this.setState({
-            uploadErrors: []
-        })
-    }
-
-    handleUpload = () => {
+    function handleUpload() {
         //show uploader, make api call
-        this.setState({
-            uploadErrors: [
-                {
-                    location: "第一行第一列",
-                    msg: "长度不符合规则"
-                }, {
-                    location: "第二行第三列",
-                    msg: "应该是数字类型"
-                }, {
-                    location: "第五行第二列",
-                    msg: "不可为空"
-                }, {
-                    location: "第五行第三列",
-                    msg: "非法数据"
-                },{
-                    location: "第五行第三列",
-                    msg: "There are many variations of passages of Lorem Ipsum available, but the ways."
-                },{
-                    location: "第五行第三列",
-                    msg: "There are many variations of passages of Lorem Ipsum available, but the ways.There are many variations of passages of Lorem Ipsum available, but the ways."
-                },
-            ]
-        })
+        setUploadErrors(FakeData.errors)
+        setShowErrorBox(true)
     }
 
-    render() {
-        const { materialNumber, vender, gsm, searching, dataSource, uploadErrors } = this.state;
-        return <div className="app-container">
-            <SearchForm
-                materialNumber={materialNumber}
-                vender={vender}
-                gsm={gsm}
-                loading={searching}
-                onMaterialNumberChange={this.handleMaterialNumberChange}
-                onVenderChange={this.handleVenderChange}
-                onGsmChange={this.handleGsmChange}
-                onSearch={this.search}
-                onReset={this.reset}
-            />
-            <DataTable dataSource={dataSource} loading={searching} onUpload={this.handleUpload} />
-            {
-                uploadErrors.length > 0 
-                ?
-                <ErrorBox errors={uploadErrors} onClose={this.clearUploadErrors} />
-                :
-                null
-            }
-        </div>
-    }
+    return (
+        <MethodContext.Provider value={{
+                handleSearchDataChange, handleSearch, handleSearchClear, handleUpload, setShowErrorBox
+        }}>
+            <div className="app-container">
+                <SearchForm
+                    materialNumber={searchData.materialNumber}
+                    vender={searchData.vender}
+                    gsm={searchData.gsm}
+                    loading={searching}
+                />
+                <DataTable dataSource={tableData} loading={searching} />
+
+                <ErrorBox errors={uploadErrors} visible={showErrorBox} />
+            </div>
+        </MethodContext.Provider>
+    )
 }
 
+
+export { MethodContext };
 export default App;

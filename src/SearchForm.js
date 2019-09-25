@@ -1,34 +1,18 @@
-import React, { Component } from 'react';
+import React, { useContext } from 'react';
 import { Select, Input, Button } from 'antd';
-import 'antd/dist/antd.css'
-import './SearchForm.scss'
+import { MethodContext } from './App';
+import './SearchForm.scss';
 
-class SearchForm extends Component {
 
-    handleMaterialNumberChange = arr => {
-        this.props.onMaterialNumberChange(arr)
-    }
+function SearchForm({ materialNumber, vender, gsm, loading }) {
+    const { 
+        handleSearchDataChange, 
+        handleSearch, 
+        handleSearchClear 
+    } = useContext(MethodContext);
 
-    handleVenderChange = e => {
-        this.props.onVenderChange(e.target.value)
-    }
-
-    handleGsmChange = e => {
-        this.props.onGsmChange(e.target.value)
-    }
-
-    handleSearch = () => {
-        this.props.onSearch()
-    }
-
-    handleReset = () => {
-        this.props.onReset()
-    }
-
-    render() {
-        const { materialNumber, vender, gsm, loading } = this.props;  
-        // console.log(this.props)
-        return <form className="search-form">
+    return (
+        <form className="search-form">
             <div className="first-row">
                 <span className="label">Material Number:</span>
                 <Select
@@ -37,28 +21,39 @@ class SearchForm extends Component {
                     dropdownStyle={{ display: "none" }}
                     tokenSeparators={[';', '；', ',', '，', ' ', '\t']}
                     value={materialNumber}
-                    onChange={this.handleMaterialNumberChange}
+                    onChange={(arr) => { handleSearchDataChange('materialNumber', arr) }}
                 />
             </div>
 
             <div className="second-row">
                 <div className="vender">
                     <span className="label">Vender:</span>
-                    <Input placeholder="Vender" value={vender} onChange={this.handleVenderChange} />
+                    <Input 
+                        placeholder="Vender" 
+                        value={vender} 
+                        onChange={(e) => { handleSearchDataChange('vender', e.target.value) }} 
+                    />
                 </div>
 
                 <div className="gsm">
                     <span className="label">GSM:</span>
-                    <Input placeholder="GSM" value={gsm} onChange={this.handleGsmChange} />
+                    <Input 
+                        placeholder="GSM" 
+                        value={gsm} 
+                        onChange={(e) => { handleSearchDataChange('gsm', e.target.value) }} />
                 </div>
 
                 <div className="btn-container">
-                    <Button icon="search" loading={loading} onClick={this.handleSearch}>Search</Button>
-                    <Button onClick={this.handleReset}>Clear</Button>
+                    <Button icon="search" loading={loading} onClick={handleSearch}>
+                        Search
+                    </Button>
+                    <Button onClick={handleSearchClear}>
+                        Clear
+                    </Button>
                 </div>
             </div>
         </form>
-    }
+    )
 }
 
 export default SearchForm;

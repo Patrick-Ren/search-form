@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, { useContext } from "react";
 import { Table, Button } from 'antd';
 import XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
-import 'antd/dist/antd.css';
+import { MethodContext } from './App';
 import './DataTable.scss';
 
 const columns = [
@@ -37,18 +37,11 @@ for (let i = 0; i < 20; i++) {
     columns.push(newColumn)
 }
 
-class DataTable extends Component {
+function DataTable({ dataSource, loading }) {
 
-    constructor(props) {
-        super(props)
-    }
-
-    handleUpload = () => {
-        this.props.onUpload()
-    }
-
+    const { handleUpload } = useContext(MethodContext)
     
-    exportAsExcel = () => {
+    function exportAsExcel() {
         /*
             这个函数里的代码来自: https://redstapler.co/sheetjs-tutorial-create-xlsx 
         */
@@ -71,7 +64,7 @@ class DataTable extends Component {
         })
         ws_data.push(header)
         //add in data 
-        this.props.dataSource.forEach(item => {
+        dataSource.forEach(item => {
             let arr = [];
             for (let prop in item) {
                 if (prop === "key")
@@ -101,32 +94,38 @@ class DataTable extends Component {
         );
     }
 
-    render() {
-        const { dataSource, loading } = this.props;
-        return  <div className="table-container">
-                <Table 
-                    columns={columns} 
-                    loading={loading}
-                    dataSource={dataSource} 
-                    scroll={{
-                        x: 1300,
-                        y: 500
-                    }}
-                    pagination={{
-                        defaultCurrent: 1,
-                        defaultPageSize: 100,
-                        hideOnSinglePage: true,
-                        total: dataSource.length
-                    }}
-                    footer={() => {
-                        return <div className="footer">
-                            <Button type="default" onClick={this.exportAsExcel}>Export As Excel</Button>
-                            <Button type="default" onClick={this.handleUpload}>Upload Excel File</Button>
+    return (
+        <div className="table-container">
+            <Table 
+                className="data-table"
+                columns={columns} 
+                loading={loading}
+                dataSource={dataSource} 
+                scroll={{
+                    x: 1300,
+                    y: 500
+                }}
+                pagination={{
+                    defaultCurrent: 1,
+                    defaultPageSize: 100,
+                    hideOnSinglePage: true,
+                    total: dataSource.length
+                }}
+                footer={() => {
+                    return (
+                        <div className="footer">
+                            <Button type="default" onClick={exportAsExcel}>
+                                Export As Excel
+                            </Button>
+                            <Button type="default" onClick={handleUpload}>
+                                Upload Excel File
+                            </Button>
                         </div>
-                    }}
-                    className="data-table" />
+                    )
+                }}
+            />
         </div>
-    }
+    )
 }
 
 export default DataTable;
