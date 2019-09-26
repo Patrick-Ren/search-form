@@ -114,10 +114,16 @@ function DataTable({ dataSource, loading }) {
                 footer={() => {
                     return (
                         <div className="footer">
-                            <Button type="default" onClick={exportAsExcel}>
+                            <Button 
+                                type="default" 
+                                icon="file-excel"
+                                onClick={exportAsExcel}>
                                 Export As Excel
                             </Button>
-                            <Button type="default" onClick={handleUpload}>
+                            <Button 
+                                type="default" 
+                                icon="upload"
+                                onClick={handleUpload}>
                                 Upload Excel File
                             </Button>
                         </div>

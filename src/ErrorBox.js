@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Drawer } from 'antd'
+import { Drawer, Icon } from 'antd'
 import { MethodContext } from './App'
 import './ErrorBox.scss'
 
