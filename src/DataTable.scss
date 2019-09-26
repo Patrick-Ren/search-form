@@ -2,14 +2,13 @@
     display: block;
     width: 100%;
     margin: 20px 0;
-    box-shadow: 0 0 10px silver; 
+    box-shadow: 0 0 1px silver; 
     .footer {
         text-align: right;
         button {
             width: 150px;
             margin-right: 20px;
             border: 1px solid silver;
-            box-shadow: 0 0 2px blue;
         }
     }
 }

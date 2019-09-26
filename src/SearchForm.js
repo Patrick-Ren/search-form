@@ -44,10 +44,16 @@ function SearchForm({ materialNumber, vender, gsm, loading }) {
                 </div>
 
                 <div className="btn-container">
-                    <Button icon="search" loading={loading} onClick={handleSearch}>
+                    <Button icon="search" 
+                        type="primary" 
+                        loading={loading} 
+                        onClick={handleSearch}
+                    >
                         Search
                     </Button>
-                    <Button onClick={handleSearchClear}>
+                    <Button 
+                        type='primary'
+                        onClick={handleSearchClear}>
                         Clear
                     </Button>
                 </div>
