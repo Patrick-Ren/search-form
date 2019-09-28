@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { Drawer } from 'antd'
 import { GlobalContext } from '../context/GlobalContextProvider';
+import { v4 } from 'uuid'
 import '../css/ErrorBox.scss';
 
 function ErrorBox() {
@@ -15,7 +16,7 @@ function ErrorBox() {
         >
                 {
                     errors.map(error => (
-                        <div className="error-card">
+                        <div className="error-card" key={v4()}>
                             <p>位置: {error.location}</p>
                             <p>{error.msg}</p>
                         </div>
