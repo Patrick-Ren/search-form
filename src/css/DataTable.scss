@@ -1,0 +1,45 @@
+.data-table {
+    display: block;
+    width: 100%;
+    margin: 20px 0;
+    box-shadow: 0 0 1px silver; 
+    .footer {
+        text-align: right;
+        button {
+            width: 150px;
+            margin-right: 20px;
+            border: 1px solid silver;
+        }
+    }
+}
+
+// .data-table {
+//     //customized scrollbar for webkit browsers
+
+//     ::-webkit-scrollbar {
+//         width: 15px;
+//     }
+
+//     ::-webkit-scrollbar-track {
+//         background-color: silver;
+//         border-radius: 10px;
+//         box-shadow: inset 0 0 5px lightgrey;
+//     }
+
+//     ::-webkit-scrollbar-thumb {
+//         background-color: darkgray;
+//         border-radius: 10px;
+//     }
+
+//     ::-webkit-scrollbar-thumb:active {
+//         background-color: blueviolet;
+//     }
+// }
+
+// ant-table-header {
+//     ::-webkit-scrollbar {
+//         display: none;
+//     }
+// }
+
+
